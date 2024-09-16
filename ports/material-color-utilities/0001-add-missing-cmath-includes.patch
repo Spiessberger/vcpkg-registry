@@ -1,0 +1,39 @@
+From 2e08fed468f56e58e4e7fe8ec9d30e2abc9c7ce7 Mon Sep 17 00:00:00 2001
+From: Daniel Spiessberger <daniel.spiessberger@sequality.at>
+Date: Thu, 22 Aug 2024 16:04:39 +0200
+Subject: [PATCH 1/2] add missing cmath includes
+
+---
+ cpp/scheme/scheme_content.cc  | 2 ++
+ cpp/scheme/scheme_fidelity.cc | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/cpp/scheme/scheme_content.cc b/cpp/scheme/scheme_content.cc
+index 6a37b0e..50347af 100644
+--- a/cpp/scheme/scheme_content.cc
++++ b/cpp/scheme/scheme_content.cc
+@@ -16,6 +16,8 @@
+ 
+ #include "cpp/scheme/scheme_content.h"
+ 
++#include <cmath>
++
+ #include "cpp/cam/hct.h"
+ #include "cpp/dislike/dislike.h"
+ #include "cpp/dynamiccolor/dynamic_scheme.h"
+diff --git a/cpp/scheme/scheme_fidelity.cc b/cpp/scheme/scheme_fidelity.cc
+index 5e0cf75..f2f2ca1 100644
+--- a/cpp/scheme/scheme_fidelity.cc
++++ b/cpp/scheme/scheme_fidelity.cc
+@@ -16,6 +16,8 @@
+ 
+ #include "cpp/scheme/scheme_fidelity.h"
+ 
++#include <cmath>
++
+ #include "cpp/cam/hct.h"
+ #include "cpp/dislike/dislike.h"
+ #include "cpp/dynamiccolor/dynamic_scheme.h"
+-- 
+2.46.0
+

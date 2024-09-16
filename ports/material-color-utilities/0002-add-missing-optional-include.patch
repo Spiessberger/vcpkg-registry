@@ -1,0 +1,24 @@
+From b47e077b87ff24bced667b31f60ef97d64361865 Mon Sep 17 00:00:00 2001
+From: Daniel Spiessberger <daniel.spiessberger@sequality.at>
+Date: Thu, 22 Aug 2024 16:04:49 +0200
+Subject: [PATCH 2/2] add missing optional include
+
+---
+ cpp/temperature/temperature_cache.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cpp/temperature/temperature_cache.h b/cpp/temperature/temperature_cache.h
+index 17e7c17..8f62811 100644
+--- a/cpp/temperature/temperature_cache.h
++++ b/cpp/temperature/temperature_cache.h
+@@ -19,6 +19,7 @@
+ 
+ #include <map>
+ #include <vector>
++#include <optional>
+ 
+ #include "cpp/cam/hct.h"
+ 
+-- 
+2.46.0
+

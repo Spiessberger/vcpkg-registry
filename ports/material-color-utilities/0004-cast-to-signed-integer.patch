@@ -1,0 +1,25 @@
+From d8b2c7b945b4cabab6b249ac1e07cbe69842587f Mon Sep 17 00:00:00 2001
+From: Daniel Spiessberger <80575371+Spiessberger@users.noreply.github.com>
+Date: Fri, 23 Aug 2024 08:25:48 +0200
+Subject: [PATCH] cast to signed integer
+
+---
+ cpp/score/score.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cpp/score/score.h b/cpp/score/score.h
+index 5bd2b82..b441b47 100644
+--- a/cpp/score/score.h
++++ b/cpp/score/score.h
+@@ -36,7 +36,7 @@ namespace material_color_utilities {
+  */
+ struct ScoreOptions {
+   size_t desired = 4;  // 4 colors matches the Android wallpaper picker.
+-  int fallback_color_argb = 0xff4285f4;  // Google Blue.
++  int fallback_color_argb = (int)0xff4285f4;  // Google Blue.
+   bool filter = true;                    // Avoid unsuitable colors.
+ };
+ 
+-- 
+2.45.1.windows.1
+

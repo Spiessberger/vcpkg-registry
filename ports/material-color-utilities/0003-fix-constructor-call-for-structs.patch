@@ -1,0 +1,113 @@
+From 2bc5c6328f7b6c994756415d61267810f4263739 Mon Sep 17 00:00:00 2001
+From: Daniel Spiessberger <80575371+Spiessberger@users.noreply.github.com>
+Date: Fri, 23 Aug 2024 07:50:29 +0200
+Subject: [PATCH] fix constructor call for structs
+
+---
+ cpp/cam/hct_solver.cc        | 20 ++++++++++----------
+ cpp/cam/viewing_conditions.h |  2 +-
+ cpp/utils/utils.cc           |  2 +-
+ 3 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/cpp/cam/hct_solver.cc b/cpp/cam/hct_solver.cc
+index fcf15ce..2909028 100644
+--- a/cpp/cam/hct_solver.cc
++++ b/cpp/cam/hct_solver.cc
+@@ -217,7 +217,7 @@ double Intercept(double source, double mid, double target) {
+ }
+ 
+ Vec3 LerpPoint(Vec3 source, double t, Vec3 target) {
+-  return (Vec3){
++  return Vec3{
+       source.a + (target.a - source.a) * t,
+       source.b + (target.b - source.b) * t,
+       source.c + (target.c - source.c) * t,
+@@ -276,27 +276,27 @@ Vec3 NthVertex(double y, int n) {
+     double b = coord_b;
+     double r = (y - g * k_g - b * k_b) / k_r;
+     if (IsBounded(r)) {
+-      return (Vec3){r, g, b};
++      return Vec3{r, g, b};
+     } else {
+-      return (Vec3){-1.0, -1.0, -1.0};
++      return Vec3{-1.0, -1.0, -1.0};
+     }
+   } else if (n < 8) {
+     double b = coord_a;
+     double r = coord_b;
+     double g = (y - r * k_r - b * k_b) / k_g;
+     if (IsBounded(g)) {
+-      return (Vec3){r, g, b};
++      return Vec3{r, g, b};
+     } else {
+-      return (Vec3){-1.0, -1.0, -1.0};
++      return Vec3{-1.0, -1.0, -1.0};
+     }
+   } else {
+     double r = coord_a;
+     double g = coord_b;
+     double b = (y - r * k_r - g * k_g) / k_b;
+     if (IsBounded(b)) {
+-      return (Vec3){r, g, b};
++      return Vec3{r, g, b};
+     } else {
+-      return (Vec3){-1.0, -1.0, -1.0};
++      return Vec3{-1.0, -1.0, -1.0};
+     }
+   }
+ }
+@@ -310,7 +310,7 @@ Vec3 NthVertex(double y, int n) {
+  * an endpoint of the segment containing the desired color.
+  */
+ void BisectToSegment(double y, double target_hue, Vec3 out[2]) {
+-  Vec3 left = (Vec3){-1.0, -1.0, -1.0};
++  Vec3 left = Vec3{-1.0, -1.0, -1.0};
+   Vec3 right = left;
+   double left_hue = 0.0;
+   double right_hue = 0.0;
+@@ -346,7 +346,7 @@ void BisectToSegment(double y, double target_hue, Vec3 out[2]) {
+ }
+ 
+ Vec3 Midpoint(Vec3 a, Vec3 b) {
+-  return (Vec3){
++  return Vec3{
+       (a.a + b.a) / 2,
+       (a.b + b.b) / 2,
+       (a.c + b.c) / 2,
+@@ -456,7 +456,7 @@ Argb FindResultByJ(double hue_radians, double chroma, double y) {
+     double r_c_scaled = InverseChromaticAdaptation(r_a);
+     double g_c_scaled = InverseChromaticAdaptation(g_a);
+     double b_c_scaled = InverseChromaticAdaptation(b_a);
+-    Vec3 scaled = (Vec3){r_c_scaled, g_c_scaled, b_c_scaled};
++    Vec3 scaled = Vec3{r_c_scaled, g_c_scaled, b_c_scaled};
+     Vec3 linrgb = MatrixMultiply(scaled, kLinrgbFromScaledDiscount);
+     // ===========================================================
+     // Operations inlined from Cam16 to avoid repeated calculation
+diff --git a/cpp/cam/viewing_conditions.h b/cpp/cam/viewing_conditions.h
+index 5864379..be4bbcc 100644
+--- a/cpp/cam/viewing_conditions.h
++++ b/cpp/cam/viewing_conditions.h
+@@ -46,7 +46,7 @@ ViewingConditions CreateViewingConditions(const double white_point[3],
+ 
+ ViewingConditions DefaultWithBackgroundLstar(const double background_lstar);
+ 
+-static const ViewingConditions kDefaultViewingConditions = (ViewingConditions){
++static const ViewingConditions kDefaultViewingConditions = ViewingConditions{
+     11.725676537,
+     50.000000000,
+     2.000000000,
+diff --git a/cpp/utils/utils.cc b/cpp/utils/utils.cc
+index eaa892d..6957e65 100644
+--- a/cpp/utils/utils.cc
++++ b/cpp/utils/utils.cc
+@@ -172,6 +172,6 @@ Vec3 MatrixMultiply(Vec3 input, const double matrix[3][3]) {
+       input.a * matrix[1][0] + input.b * matrix[1][1] + input.c * matrix[1][2];
+   double c =
+       input.a * matrix[2][0] + input.b * matrix[2][1] + input.c * matrix[2][2];
+-  return (Vec3){a, b, c};
++  return Vec3{a, b, c};
+ }
+ }  // namespace material_color_utilities
+-- 
+2.45.1.windows.1
+
